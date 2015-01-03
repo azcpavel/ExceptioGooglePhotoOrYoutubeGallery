@@ -8,7 +8,7 @@
 
 ;(function($){
 	var defaultOptions = {		
-		galleryWidth : '100%', //ul element width
+		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
 		galleryUserId : '113851267474432398425', //your google id
 		photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
