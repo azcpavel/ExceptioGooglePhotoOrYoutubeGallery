@@ -63,7 +63,7 @@
 			else{
 				chieldWidth = '100';
 			};
-			ex.html('<div style="width:100%;text-align:center;"><img src="loader.gif"/></div>');
+			ex.html('<div style="width:100%;text-align:center;"><img src="'+gallery.settings.loadingImage+'"/></div>');
 			$('#exLoadMoreAlbum').remove();
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
