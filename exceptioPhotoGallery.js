@@ -162,7 +162,7 @@
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
-				$('body').hover(function(){
+				$('body').click(function(){
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});	
@@ -184,7 +184,7 @@
 					'padding-bottom': '40px',
 					'z-index': '39237846'
 					});
-					this.$photoGalleryClose = $('<div>Close&nbsp;&nbsp;&nbsp;</div>').attr('title','Click to close.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
+					this.$photoGalleryClose = $('<div>Back&nbsp;&nbsp;&nbsp;</div>').attr('title','Back to gallery.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
 						$(this).parent().fadeOut('slow').remove();
 						ex.fadeIn('slow');
 					});
