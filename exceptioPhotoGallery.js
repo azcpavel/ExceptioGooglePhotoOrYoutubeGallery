@@ -75,7 +75,7 @@
 			$.getJSON("https://picasaweb.google.com/data/feed/base/user/"+gallery.settings.galleryUserId+"?access=public&alt=json-in-script&callback=?",
 				function(data){
 						var parentList  = data.feed.entry;						
-					ex.empty();
+					ex.empty();				
 					
 					if(gallery.settings.hideMoreThen != 0)
 						var last = gallery.settings.hideMoreThen;
