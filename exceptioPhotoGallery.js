@@ -107,10 +107,8 @@
 			
 			$.getJSON(parentList[parentLoop].link[0].href+"&access=public&alt=json-in-script&callback=?",
 				function(data){								
-				var parentListChield  = data.feed;
-				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({'float':'left','cursor':'pointer',width:chieldWidth+'%',overflow:'hidden'});
-				this.$galleryAlbum.html('<img src="'+parentListChield.icon.$t+'" style="width:100%;">');
-				
+				var parentListChield  = data.feed;				
+				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({'position':'relative','background':'url('+parentListChield.entry[0].content.src+') no-repeat center center','height':'250','float':'left','cursor':'pointer',width:chieldWidth+'%',overflow:'hidden'});								
 				this.$galleryAlbum.hover(function(){					
 					this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
 					.css({'opacity':'0',
@@ -124,15 +122,15 @@
 					'-o-transition':'all 0.5s',
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
-					'position':'absolute'
+					'position':'absolute',
+					'top' : '100%'					
 					});
-					this.$galleryAlbumPop.html('<div style="padding-top:40%">'+parentList[parentLoop].title.$t+'</div><hr>');
-					$(this).append(this.$galleryAlbumPop);
-					this.$galleryAlbumPop.css('top',getTop($(this)));
-					getTop($(this));
+					this.$galleryAlbumPop.html('<div style="padding-top:35%">'+parentList[parentLoop].title.$t+'</div><hr>');
+					$(this).append(this.$galleryAlbumPop);					
+					this.$galleryAlbumPop.animate({'top':'0px'},50);					
 					this.$galleryAlbumPop.css('opacity','1');					
 				},function(){
-					$(this).children().eq(1).remove();					
+					$(this).children().eq(0).remove();					
 				});
 
 				this.$galleryAlbum.click(function(){
@@ -177,19 +175,6 @@
 				ex.append(this.$galleryAlbum);	
 			});
 		};
-
-		//Initializes namespace album element top
-		var getTop = function(element){			
-			var elementTop;
-			if (windowWidth > 768)
-				elementTop = element.height() * Math.floor(element.index() / 4);
-			else if(windowWidth > 480)
-				elementTop = element.height() * Math.floor(element.index() / 2);
-			else{
-				elementTop = element.height() * Math.floor(element.index() / 1);
-			};
-			return elementTop;			
-		}
 
 		//Initializes namespace photo
 		var shotoPhoto = function(parentListChield, index){
