@@ -199,8 +199,7 @@
 			});
 			this.$photoView.html(this.$photoViewClose);
 			$('#exceptioPhotoView').append(this.$photoView);
-			var mainImage = parentListChield.entry[index];			
-			console.log(mainImage);
+			var mainImage = parentListChield.entry[index];						
 			this.$photoViewMainDiv= $('<div style="width:100%;"></div>');
 			this.$photoView.append(this.$photoViewMainDiv);
 			this.$photoViewMainDiv.html('<img src="'+mainImage.content.src+'" style="width:60%;margin:0 auto;">');
