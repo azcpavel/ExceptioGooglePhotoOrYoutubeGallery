@@ -109,9 +109,7 @@
 				function(data){								
 				var parentListChield  = data.feed;				
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
-					'position':'relative',
-					// 'background':'url('+parentListChield.entry[0].content.src+') no-repeat',
-					'background-position' : 'center center',
+					'position':'relative',					
 					'height':'250',
 					'float':'left',
 					'cursor':'pointer',
@@ -164,13 +162,17 @@
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
-
+				$('body').hover(function(){
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');
+				});	
+				
 				this.$galleryAlbum.click(function(){
 					this.$photoGallery = $('<div></div>')
 					.css({
 					'overflow-y':'auto',
-					'height':$(window).height(),
-					'width':$(window).width(),
+					'height':'auto',
+					'width':'100%',
 					'color':'#FFF',
 					'background':'rgba(0,0,0,1)',
 					'text-align': 'center',
@@ -178,25 +180,26 @@
 					'-o-transition':'all 0.5s',
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
-					'position':'fixed',
-					'top': '0',
-					'left': '0',
+					'position':'relative',
+					'padding-bottom': '40px',
 					'z-index': '39237846'
 					});
 					this.$photoGalleryClose = $('<div>Close&nbsp;&nbsp;&nbsp;</div>').attr('title','Click to close.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
 						$(this).parent().fadeOut('slow').remove();
+						ex.fadeIn('slow');
 					});
 					this.$photoGallery.html(this.$photoGalleryClose);
-					$('body').append(this.$photoGallery);
+					ex.viewport.append(this.$photoGallery);
+					ex.hide();
 					this.$photoGallery.fadeIn('slow').append('<div id="exceptioPhotoView"></div>');
 					$.each(parentListChield.entry,function(index, pic){						
-						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="cursor:pointer;width:'+chieldWidth+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.media$group.media$thumbnail[2].url+'" style="height:213px;margin:0 auto;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
+						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="cursor:pointer;width:'+chieldWidth+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.content.src+'" style="height:260px;margin:0 auto;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
 					});
 
 					$('#exceptioPhotoView > div').hover(function(){						
-						$(this).find('img').css({'height':'203px','margin-top':'5px'});
+						$(this).find('img').css({'height':'270px'});
 					},function(){
-						$(this).find('img').css({'height':'213px','margin-top':'0px'});
+						$(this).find('img').css({'height':'260px'});
 					});
 
 					$(('#exceptioPhotoView > div')).click(function(){
