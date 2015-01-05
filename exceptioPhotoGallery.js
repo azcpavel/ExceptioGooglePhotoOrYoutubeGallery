@@ -124,10 +124,12 @@
 					'-o-transition':'all 0.5s',
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
-					'position':'absolute'});
+					'position':'absolute'
+					});
 					this.$galleryAlbumPop.html('<div style="padding-top:40%">'+parentList[parentLoop].title.$t+'</div><hr>');
 					$(this).append(this.$galleryAlbumPop);
-					this.$galleryAlbumPop.css('top',$(this).offset().top);
+					this.$galleryAlbumPop.css('top',getTop($(this)));
+					getTop($(this));
 					this.$galleryAlbumPop.css('opacity','1');					
 				},function(){
 					$(this).children().eq(1).remove();					
@@ -148,7 +150,8 @@
 					'-webkit-transition':'all 0.5s',
 					'position':'fixed',
 					'top': '0',
-					'left': '0'
+					'left': '0',
+					'z-index': '39237846'
 					});
 					this.$photoGalleryClose = $('<div>Close&nbsp;&nbsp;&nbsp;</div>').attr('title','Click to close.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
 						$(this).parent().fadeOut('slow').remove();
@@ -174,6 +177,19 @@
 				ex.append(this.$galleryAlbum);	
 			});
 		};
+
+		//Initializes namespace album element top
+		var getTop = function(element){			
+			var elementTop;
+			if (windowWidth > 768)
+				elementTop = element.height() * Math.floor(element.index() / 4);
+			else if(windowWidth > 480)
+				elementTop = element.height() * Math.floor(element.index() / 2);
+			else{
+				elementTop = element.height() * Math.floor(element.index() / 1);
+			};
+			return elementTop;			
+		}
 
 		//Initializes namespace photo
 		var shotoPhoto = function(parentListChield, index){
