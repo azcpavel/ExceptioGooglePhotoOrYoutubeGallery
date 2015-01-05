@@ -108,13 +108,31 @@
 			$.getJSON(parentList[parentLoop].link[0].href+"&access=public&alt=json-in-script&callback=?",
 				function(data){								
 				var parentListChield  = data.feed;				
-				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({'position':'relative','background':'url('+parentListChield.entry[0].content.src+') no-repeat center center','height':'250','float':'left','cursor':'pointer',width:chieldWidth+'%',overflow:'hidden'});								
-				this.$galleryAlbum.hover(function(){					
-					this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
-					.css({'opacity':'0',
+				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
+					'position':'relative',
+					// 'background':'url('+parentListChield.entry[0].content.src+') no-repeat',
+					'background-position' : 'center center',
+					'height':'250',
+					'float':'left',
+					'cursor':'pointer',
+					width:chieldWidth+'%',
+					overflow:'hidden',					
+				});
+				this.$galleryAlbumImage = $('<img src="'+parentListChield.entry[0].content.src+'">').css({
+					'transition':'all 0.5s',
+					'-o-transition':'all 0.5s',
+					'-moz-transition':'all 0.5s',
+					'-webkit-transition':'all 0.5s',
+					'width': '150%',
+					'min-height': '250px',
+					'margin-left' : '-25%'
+				});
+				this.$galleryAlbum.html(this.$galleryAlbumImage);
+				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
+					.css({
 					'overflow':'hidden',
-					'height':$(this).height(),
-					'width':$(this).width(),
+					'height':'250px',
+					'width':'100%',
 					'color':'#FFF',
 					'background':'rgba(0,0,0,0.5)',
 					'text-align': 'center',
@@ -123,14 +141,28 @@
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
 					'position':'absolute',
-					'top' : '100%'					
+					'top' : '80%',
+					'padding-top' : '2%'					
 					});
-					this.$galleryAlbumPop.html('<div style="padding-top:35%">'+parentList[parentLoop].title.$t+'</div><hr>');
-					$(this).append(this.$galleryAlbumPop);					
-					this.$galleryAlbumPop.animate({'top':'0px'},50);					
-					this.$galleryAlbumPop.css('opacity','1');					
+				this.$galleryAlbumPop.html('<div style="width:100%;text-align:center;">'+parentList[parentLoop].title.$t+'</div><hr>');
+				this.$galleryAlbum.append(this.$galleryAlbumPop);																				
+				this.$galleryAlbum.hover(function(){
+					$(this).find('img').css({
+						'width': '160%',						
+						'margin-left' : '-30%'						
+					});
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');
+					$(this).find('[class="galleryAlbumPop"]').animate({'top':'0px'},50);
+					$(this).find('[class="galleryAlbumPop"]').css('padding-top','35%');
 				},function(){
-					$(this).children().eq(0).remove();					
+					$(this).find('img').css({
+						'width': '150%',
+						'min-height': '250px',
+						'margin-left' : '-25%'
+					});
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');
 				});
 
 				this.$galleryAlbum.click(function(){
