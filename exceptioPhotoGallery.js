@@ -17,7 +17,7 @@
 		photoViewMainDivPrevText : 'Prev',
 		photoViewMainDivPrevClass : '',
 		hideMoreThen : 0, //you can define number of album load in first place
-		loadingImage : 'loader.gif' //you can define imagepath with name
+		loadingImage : 'loader.gif', //you can define imagepath with name
 		loadMoreText : 'Load More..', //text for load more options
 		loadMoreCSS : {'cursor':'pointer'}, //css for load more options
 		onGalleryEnter : function(){}, //exec before Gallery Show
