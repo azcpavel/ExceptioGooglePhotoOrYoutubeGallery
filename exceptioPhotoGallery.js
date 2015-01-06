@@ -73,7 +73,7 @@
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});
-			ex.css({'float':'left','width':'100%','border': '5px solid '+gallery.settings.backgroundRgb, 'background' : gallery.settings.backgroundRgb});
+			ex.css({'float':'left','width':'99%','padding': '0.5%', 'background' : gallery.settings.backgroundRgb});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
@@ -115,12 +115,12 @@
 				var parentListChield  = data.feed;				
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
 					'position':'relative',					
-					'height':'250',
+					'height':'210',
 					'float':'left',
 					'cursor':'pointer',
-					'border': '5px solid '+gallery.settings.backgroundRgb,
-					width:chieldWidth+'%',
-					overflow:'hidden',					
+					'margin' : '0.5%',
+					'width':(chieldWidth - 1)+'%',
+					'overflow':'hidden',					
 				});
 				this.$galleryAlbumImage = $('<img src="'+parentListChield.entry[0].content.src+'">').css({
 					'transition':'all 0.5s',
@@ -128,14 +128,14 @@
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
 					'width': '150%',
-					'min-height': '250px',
+					'min-height': '210px',
 					'margin-left' : '-25%'
 				});
 				this.$galleryAlbum.html(this.$galleryAlbumImage);
 				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
 					.css({
 					'overflow':'hidden',
-					'height':'250px',
+					'height':'210px',
 					'width':'100%',
 					'color':'#FFF',
 					'background':gallery.settings.backgroundRgba,					
@@ -166,7 +166,7 @@
 				},function(){
 					$(this).find('img').css({
 						'width': '150%',
-						'min-height': '250px',
+						'min-height': '210px',
 						'margin-left' : '-25%'
 					});
 					$(".galleryAlbumPop").css('padding-top','2%');
@@ -181,11 +181,12 @@
 					this.$photoGallery = $('<div></div>')
 					.css({
 					'overflow-y':'auto',
+					'overflow-x':'hidden',
 					'height':'auto',
-					'width':'100%',
+					'width':'99%',
 					'color':'#FFF',
 					'background':gallery.settings.backgroundRgb,
-					'border': '5px solid '+gallery.settings.backgroundRgb,					
+					'padding': '0.5%',					
 					'text-align': 'center',
 					'transition':'all 0.5s',
 					'-o-transition':'all 0.5s',
@@ -203,7 +204,7 @@
 					ex.hide();
 					this.$photoGallery.fadeIn('slow').append('<div id="exceptioPhotoView"></div>');
 					$.each(parentListChield.entry,function(index, pic){						
-						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="border: 5px solid '+gallery.settings.backgroundRgb+';cursor:pointer;width:'+chieldWidth+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.content.src+'" style="height:260px;margin:0 auto;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
+						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="margin:0.5%;cursor:pointer;width:'+(chieldWidth-1)+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.content.src+'" style="height:260px;margin:0 auto;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
 					});
 
 					$('#exceptioPhotoView > div').hover(function(){						
