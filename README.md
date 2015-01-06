@@ -21,8 +21,13 @@ Simple jQuery Google Plus Image Gallery
 				photoViewMainDivNextClass : '',
 				photoViewMainDivPrevText : 'Prev',
 				photoViewMainDivPrevClass : '',
+				albumTitleCSS: '',
+				backgroundRgba: 'rgba(0,0,0,0.9)',
+				backgroundRgb: 'rgb(0,0,0)',
+				photoAlbumCloseText : 'Back&nbsp;&nbsp;&nbsp;',
+				photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;',
 				hideMoreThen : 0, //you can define number of album load in first place
-				loadingImage : 'loader.gif' //you can define imagepath with name
+				loadingImage : 'loader.gif', //you can define imagepath with name
 				loadMoreText : 'Load More..', //text for load more options
 				loadMoreCSS : {'cursor':'pointer'}, //css for load more options
 				onGalleryEnter : function(){}, //exec before Gallery Show
