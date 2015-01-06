@@ -92,7 +92,7 @@
 					};
 				}
 			);
-
+			
 			if(gallery.settings.hideMoreThen != 0){				
 				this.$loadMore = $('<span id="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
 					gallery.settings.hideMoreThen = 0;
@@ -162,9 +162,8 @@
 						'margin-left' : '-30%'						
 					});
 					$(".galleryAlbumPop").css('padding-top','2%');
-					$(".galleryAlbumPop").css('top','80%');
-					$(this).find('[class="galleryAlbumPop"]').animate({'top':'-0.5%'},50);
-					$(this).find('[class="galleryAlbumPop"]').css('padding-top','35%');
+					$(".galleryAlbumPop").css('top','80%');					
+					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
 				},function(){
 					$(this).find('img').css({
 						'width': '150%',
@@ -257,7 +256,7 @@
 			
 			if(typeof parentListChield.entry[index+1] != 'undefined')
 			{
-				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivNextText+'</span>').css({'cursor':'pointer','top':'40%','position':'absolute','right':'10%'}).click(function(){
+				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivNextText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','right':'10%'}).click(function(){
 					$('#photoPreview').remove();
 					shotoPhoto(parentListChield,index+1);
 				});
@@ -267,7 +266,7 @@
 			}
 			if(typeof parentListChield.entry[index-1] != 'undefined')
 			{
-				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivPrevText+'</span>').css({'cursor':'pointer','top':'40%','position':'absolute','left':'10%'}).click(function(){
+				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivPrevText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','left':'10%'}).click(function(){
 					$('#photoPreview').remove();
 					shotoPhoto(parentListChield,index-1);
 				});
