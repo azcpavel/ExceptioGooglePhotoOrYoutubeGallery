@@ -135,7 +135,7 @@
 				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
 					.css({
 					'overflow':'hidden',
-					'height':'210px',
+					'height':'250px',
 					'width':'100%',
 					'color':'#FFF',
 					'background':gallery.settings.backgroundRgba,					
@@ -161,7 +161,7 @@
 					});
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
-					$(this).find('[class="galleryAlbumPop"]').animate({'top':'0px'},50);
+					$(this).find('[class="galleryAlbumPop"]').animate({'top':'-0.5%'},50);
 					$(this).find('[class="galleryAlbumPop"]').css('padding-top','35%');
 				},function(){
 					$(this).find('img').css({
