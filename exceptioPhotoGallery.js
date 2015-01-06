@@ -73,7 +73,7 @@
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});
-			ex.css({'float':'left','width':'99%','padding': '0.5%', 'background' : gallery.settings.backgroundRgb});
+			ex.css({'float':'left','width':'99%','padding': '0.5%'});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
@@ -110,7 +110,7 @@
 		//Initializes namespace album
 		var printAlbum = function(parentList,parentLoop){
 			
-			$.getJSON(parentList[parentLoop].link[0].href+"&access=public&alt=json-in-script&callback=?",
+			$.getJSON(parentList[parentLoop].link[0].href+"&imgmax=1600&access=public&alt=json-in-script&callback=?",
 				function(data){								
 				var parentListChield  = data.feed;				
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
@@ -118,6 +118,7 @@
 					'height':'210',
 					'float':'left',
 					'cursor':'pointer',
+					'background' : gallery.settings.backgroundRgb,					
 					'margin' : '0.5%',
 					'width':(chieldWidth - 1)+'%',
 					'overflow':'hidden',					
@@ -146,7 +147,8 @@
 					'-webkit-transition':'all 0.5s',
 					'position':'absolute',
 					'top' : '80%',
-					'padding-top' : '2%'					
+					'padding-top' : '2%',
+					'z-index' : '39237846'					
 					});
 				this.$galleryAlbumPopDiv = $('<div style="width:100%;text-align:center;">'+parentList[parentLoop].title.$t+'</div>');
 				if(gallery.settings.albumTitleCSS != '')
