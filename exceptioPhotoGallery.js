@@ -76,6 +76,8 @@
 			$('#exLoadMoreAlbum').remove();
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
+			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');
+			ex.viewport.append(ex.more);
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});
 			ex.css({'float':'left','width':'99%','padding': '0.5%'});
 			if(gallery.settings.wrapClass != null)
@@ -114,22 +116,22 @@
 				}
 			);
 			
-			if(gallery.settings.hideMoreThen != 0){				
-				this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
-					gallery.settings.hideMoreThenBack = gallery.settings.hideMoreThen;
-					gallery.settings.hideMoreThen = 0;
-					initGallery(gallery.settings);					
-				});
-				ex.viewport.append(this.$loadMore);
-			}
-			else{
-				this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
-					gallery.settings.hideMoreThen = gallery.settings.hideMoreThenBack;					
-					initGallery(gallery.settings);					
-				});
-				ex.viewport.append(this.$loadMore);	
-			}			
-				
+			if(gallery.settings.hideMoreThen != 0 || gallery.settings.hideMoreThenBack != 0){
+
+				if(gallery.settings.hideMoreThen != 0)
+					this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
+						gallery.settings.hideMoreThenBack = gallery.settings.hideMoreThen;
+						gallery.settings.hideMoreThen = 0;
+						ex.reloadGallery(gallery.settings);					
+					});
+				else
+					this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
+						gallery.settings.hideMoreThen = gallery.settings.hideMoreThenBack;					
+						ex.reloadGallery(gallery.settings);					
+					});
+
+				ex.more.html(this.$loadMore);				
+			}				
 
 		};
 
@@ -441,7 +443,8 @@
 
 		//Initializes namespace settings for Destroy Gallery
 		ex.desrtoyGallery = function (){				
-			$(this).unwrap().unwrap();
+			ex.more.remove();
+			$(this).unwrap().unwrap();			
 			$(this).children().css({'list-style':'initial','float':'none'})			
 		};
 
