@@ -115,7 +115,7 @@
 			);
 			
 			if(gallery.settings.hideMoreThen != 0){				
-				this.$loadMore = $('<span id="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
+				this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
 					gallery.settings.hideMoreThenBack = gallery.settings.hideMoreThen;
 					gallery.settings.hideMoreThen = 0;
 					initGallery(gallery.settings);					
@@ -123,7 +123,7 @@
 				ex.viewport.append(this.$loadMore);
 			}
 			else{
-				this.$loadMore = $('<span id="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
+				this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
 					gallery.settings.hideMoreThen = gallery.settings.hideMoreThenBack;					
 					initGallery(gallery.settings);					
 				});
