@@ -7,7 +7,8 @@
 */
 
 ;(function($){
-	var defaultOptions = {		
+	var defaultOptions = {
+		type : 'picasa',	//youtube or picasa	
 		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
 		galleryUserId : 'azc.pavel@gmail.com', //your google id
@@ -22,8 +23,10 @@
 		photoAlbumCloseText : 'Back&nbsp;&nbsp;&nbsp;',
 		photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;',
 		hideMoreThen : 0, //you can define number of album load in first place
+		hideMoreThenBack : 0,
 		loadingImage : 'loader.gif', //you can define imagepath with name
 		loadMoreText : 'Load More..', //text for load more options
+		loadLessText : 'Load Less..', //text for load more options
 		loadMoreCSS : {'cursor':'pointer'}, //css for load more options
 		onGalleryEnter : function(){}, //exec before Gallery Show
 		onGalleryPhoto : function(){} //exec after Photo Show		
@@ -77,6 +80,23 @@
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
+			if(gallery.settings.type == 'youtube')
+			$.getJSON('https://www.googleapis.com/youtube/v3/search?channelId=UCREGcNBmpkSRkf28vwK7Vzw&key=AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko&maxResults=50&type=video&part=id,snippet',
+				function(data){
+					var parentList  = data.items;						
+					ex.empty();
+					
+					if(gallery.settings.hideMoreThen != 0)
+						var last = gallery.settings.hideMoreThen;
+					else
+						var last = parentList.length;
+					//console.log(parentList);	
+					for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
+						printAlbumYoutube(parentList,parentLoop);					
+					};
+				});
+
+			if(gallery.settings.type == 'picasa')
 			$.getJSON("https://picasaweb.google.com/data/feed/base/user/"+gallery.settings.galleryUserId+"?access=public&alt=json-in-script&callback=?",
 				function(data){
 						var parentList  = data.feed.entry;						
@@ -95,19 +115,160 @@
 			
 			if(gallery.settings.hideMoreThen != 0){				
 				this.$loadMore = $('<span id="exLoadMoreAlbum">'+gallery.settings.loadMoreText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){
+					gallery.settings.hideMoreThenBack = gallery.settings.hideMoreThen;
 					gallery.settings.hideMoreThen = 0;
 					initGallery(gallery.settings);					
 				});
 				ex.viewport.append(this.$loadMore);
 			}
 			else{
-				$('#exLoadMoreAlbum').remove();	
+				this.$loadMore = $('<span id="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
+					gallery.settings.hideMoreThen = gallery.settings.hideMoreThenBack;					
+					initGallery(gallery.settings);					
+				});
+				ex.viewport.append(this.$loadMore);	
 			}			
 				
 
 		};
 
-		//Initializes namespace album
+		//Initializes namespace tube album
+		var printAlbumYoutube = function(parentList,parentLoop){
+			
+			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].id.videoId+'&key=AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko&part=snippet,statistics,status',
+				function(data){								
+				var parentListChield  = data.items[0];
+				//console.log(parentListChield);				
+				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
+					'position':'relative',					
+					'height':'210',
+					'float':'left',
+					'cursor':'pointer',
+					'background' : gallery.settings.backgroundRgb,					
+					'margin' : '0.5%',
+					'width':(chieldWidth - 1)+'%',
+					'overflow':'hidden',					
+				});
+				this.$galleryAlbumImage = $('<img src="'+parentListChield.snippet.thumbnails.high.url+'">').css({
+					'transition':'all 0.5s',
+					'-o-transition':'all 0.5s',
+					'-moz-transition':'all 0.5s',
+					'-webkit-transition':'all 0.5s',
+					'width': '150%',
+					'min-height': '210px',
+					'margin-left' : '-25%'
+				});
+				this.$galleryAlbum.html(this.$galleryAlbumImage);
+				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
+					.css({
+					'overflow':'hidden',
+					'height':'250px',
+					'width':'100%',
+					'color':'#FFF',
+					'background':gallery.settings.backgroundRgba,					
+					'text-align': 'center',
+					'transition':'all 0.5s',
+					'-o-transition':'all 0.5s',
+					'-moz-transition':'all 0.5s',
+					'-webkit-transition':'all 0.5s',
+					'position':'absolute',
+					'top' : '80%',
+					'padding-top' : '2%',
+					'z-index' : '39237846'					
+					});
+				this.$galleryAlbumPopDiv = $('<div style="width:100%;text-align:center;">'+parentListChield.snippet.title+'</div>');
+				if(gallery.settings.albumTitleCSS != '')
+					this.$galleryAlbumPopDiv.css(gallery.settings.albumTitleCSS);
+
+				this.$galleryAlbumPop.html(this.$galleryAlbumPopDiv).append('<hr>');
+				this.$galleryAlbum.append(this.$galleryAlbumPop);																				
+				this.$galleryAlbum.hover(function(){
+					$(this).find('img').css({
+						'width': '160%',						
+						'margin-left' : '-30%'						
+					});
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');					
+					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
+				},function(){
+					$(this).find('img').css({
+						'width': '150%',
+						'min-height': '210px',
+						'margin-left' : '-25%'
+					});
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');
+				});
+				$('body').click(function(){
+					$(".galleryAlbumPop").css('padding-top','2%');
+					$(".galleryAlbumPop").css('top','80%');
+				});	
+				
+				this.$galleryAlbum.click(function(){
+					// console.log('Test');
+					showTube(parentList, $(this).index());
+					gallery.settings.onGalleryEnter();
+				});
+				ex.append(this.$galleryAlbum);	
+			});
+		};
+
+		//Initializes namespace tube
+		var showTube = function(parentList, index){
+			console.log(parentList[index+1],parentList[index-1]);			
+			this.$tubeView = $('<div id="photoPreview"></div>')
+			.css({
+			'overflow-y':'auto',
+			'height':$(window).height(),
+			'width':$(window).width(),
+			'color':'#FFF',
+			'background':gallery.settings.backgroundRgba,
+			'text-align': 'center',
+			'transition':'all 0.5s',
+			'-o-transition':'all 0.5s',
+			'-moz-transition':'all 0.5s',
+			'-webkit-transition':'all 0.5s',
+			'position':'fixed',
+			'top': '0',
+			'left': '0',
+			'z-index': '39237846'						
+			});
+			this.$tubeViewClose = $('<div>'+gallery.settings.photoPreviewCloseText+'</div>').attr('title','Click to close.').css({'position':'absolute','margin-top':'5%','font-size':'20px','width':'80%','text-align':'right','cursor':'pointer'}).click(function(){
+				$(this).parent().fadeOut('slow').remove();
+			});
+			this.$tubeView.html(this.$tubeViewClose);
+			ex.append(this.$tubeView);			
+			this.$tubeViewMainDiv= $('<div style="width:100%;margin-top:5%;"></div>');
+			this.$tubeView.append(this.$tubeViewMainDiv);
+			this.$tubeViewMainDiv.html('<iframe src="http://www.youtube.com/embed/'+parentList[index].id.videoId+'" frameborder="0" style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;"></iframe>');
+			this.$tubeViewMainDivComment = $('<div>'+parentList[index].snippet.description+'</div>').css(gallery.settings.photoCommentsCSS);
+			this.$tubeViewMainDiv.append(this.$tubeViewMainDivComment);
+			
+			if(typeof parentList[index+1] != 'undefined')
+			{
+				this.$tubeViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivNextText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','right':'10%'}).click(function(){
+					$('#photoPreview').remove();
+					showTube(parentList,index+1);
+				});
+				if(gallery.settings.photoViewMainDivNextClass != '')
+					this.$tubeViewMainDivNext.addClass(gallery.settings.photoViewMainDivNextClass);
+				this.$tubeViewMainDiv.append(this.$tubeViewMainDivNext);
+			}
+			if(typeof parentList[index-1] != 'undefined')
+			{
+				this.$tubeViewMainDivPrev = $('<span>'+gallery.settings.photoViewMainDivPrevText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','left':'10%'}).click(function(){
+					$('#photoPreview').remove();
+					showTube(parentList,index-1);
+				});
+				if(gallery.settings.photoViewMainDivPrevClass != '')
+					this.$tubeViewMainDivPrev.addClass(gallery.settings.photoViewMainDivPrevClass);
+				this.$tubeViewMainDiv.append(this.$tubeViewMainDivPrev);
+			}
+			gallery.settings.onGalleryPhoto();
+		};
+
+
+		//Initializes namespace photo album
 		var printAlbum = function(parentList,parentLoop){
 			
 			$.getJSON(parentList[parentLoop].link[0].href+"&imgmax=1600&access=public&alt=json-in-script&callback=?",
@@ -215,8 +376,8 @@
 					});
 
 					$(('#exceptioPhotoView > div')).click(function(){
-						shotoPhoto(parentListChield, $(this).data('index'));
-					})
+						showPhoto(parentListChield, $(this).data('index'));
+					});
 					gallery.settings.onGalleryEnter();
 				});
 				ex.append(this.$galleryAlbum);	
@@ -224,7 +385,7 @@
 		};
 
 		//Initializes namespace photo
-		var shotoPhoto = function(parentListChield, index){
+		var showPhoto = function(parentListChield, index){
 			this.$photoView = $('<div id="photoPreview"></div>')
 			.css({
 			'overflow-y':'auto',
@@ -258,7 +419,7 @@
 			{
 				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivNextText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','right':'10%'}).click(function(){
 					$('#photoPreview').remove();
-					shotoPhoto(parentListChield,index+1);
+					showPhoto(parentListChield,index+1);
 				});
 				if(gallery.settings.photoViewMainDivNextClass != '')
 					this.$photoViewMainDivNext.addClass(gallery.settings.photoViewMainDivNextClass);
@@ -266,16 +427,16 @@
 			}
 			if(typeof parentListChield.entry[index-1] != 'undefined')
 			{
-				this.$photoViewMainDivNext = $('<span>'+gallery.settings.photoViewMainDivPrevText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','left':'10%'}).click(function(){
+				this.$photoViewMainDivPrev = $('<span>'+gallery.settings.photoViewMainDivPrevText+'</span>').css({'cursor':'pointer','top':'50%','position':'absolute','left':'10%'}).click(function(){
 					$('#photoPreview').remove();
-					shotoPhoto(parentListChield,index-1);
+					showPhoto(parentListChield,index-1);
 				});
 				if(gallery.settings.photoViewMainDivPrevClass != '')
 					this.$photoViewMainDivPrev.addClass(gallery.settings.photoViewMainDivPrevClass);
-				this.$photoViewMainDiv.append(this.$photoViewMainDivNext);
+				this.$photoViewMainDiv.append(this.$photoViewMainDivPrev);
 			}
 			gallery.settings.onGalleryPhoto();
-		}
+		};		
 
 		//Initializes namespace settings for Destroy Gallery
 		ex.desrtoyGallery = function (){				
