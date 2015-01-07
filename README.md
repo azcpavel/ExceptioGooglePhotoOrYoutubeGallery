@@ -16,7 +16,8 @@ Simple jQuery Google Plus Image Gallery
 				type : 'picasa',	//youtube or picasa	
 				galleryWidth : '100%', //element width
 				wrapClass : null, //if you wish to add additional class in wrapper		
-				galleryUserId : 'azc.pavel@gmail.com', //your google id
+				galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube channel id
+				galleryUserApiKey : '', //google console api key
 				photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
 				photoViewMainDivNextText : 'Next',
 				photoViewMainDivNextClass : '',

@@ -11,7 +11,8 @@
 		type : 'picasa',	//youtube or picasa	
 		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
-		galleryUserId : 'azc.pavel@gmail.com', //your google id
+		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube channel id
+		galleryUserApiKey : '', //google console api key
 		photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
 		photoViewMainDivNextText : 'Next',
 		photoViewMainDivNextClass : '',
@@ -81,7 +82,7 @@
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
 			if(gallery.settings.type == 'youtube')
-			$.getJSON('https://www.googleapis.com/youtube/v3/search?channelId=UCREGcNBmpkSRkf28vwK7Vzw&key=AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko&maxResults=50&type=video&part=id,snippet',
+			$.getJSON('https://www.googleapis.com/youtube/v3/search?channelId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
 				function(data){
 					var parentList  = data.items;						
 					ex.empty();
