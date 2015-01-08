@@ -53,6 +53,8 @@
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 
+		var channelDetails;
+
 		var chieldWidth;
 
 		$(window).resize(function(){
@@ -85,7 +87,13 @@
 
 			if(gallery.settings.type == 'youtube')
 			$.getJSON('https://www.googleapis.com/youtube/v3/search?channelId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
-				function(data){
+				function (data){					
+					$.getJSON('https://www.googleapis.com/youtube/v3/channels?id='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&part=contentDetails,snippet,statistics',
+						function (argument) {							
+							channelDetails = argument.items[0];							
+						}
+					);
+					
 					var parentList  = data.items;						
 					ex.empty();
 					
@@ -141,8 +149,7 @@
 			
 			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].id.videoId+'&key=AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko&part=snippet,statistics,status',
 				function(data){								
-				var parentListChield  = data.items[0];
-				//console.log(parentListChield);				
+				var parentListChield  = data.items[0];							
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
 					'position':'relative',					
 					'height':'210',
@@ -218,8 +225,7 @@
 		};
 
 		//Initializes namespace tube
-		var showTube = function(parentList, index){
-			console.log(parentList[index+1],parentList[index-1]);			
+		var showTube = function(parentList, index){					
 			this.$tubeView = $('<div id="photoPreview"></div>')
 			.css({
 			'overflow-y':'auto',
@@ -244,7 +250,7 @@
 			ex.append(this.$tubeView);			
 			this.$tubeViewMainDiv= $('<div style="width:100%;margin-top:5%;"></div>');
 			this.$tubeView.append(this.$tubeViewMainDiv);
-			this.$tubeViewMainDiv.html('<iframe src="http://www.youtube.com/embed/'+parentList[index].id.videoId+'" frameborder="0" style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;"></iframe>');
+			this.$tubeViewMainDiv.html('<iframe src="http://www.youtube.com/embed/'+parentList[index].id.videoId+'?list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" frameborder="0" style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;"></iframe>');
 			this.$tubeViewMainDivComment = $('<div>'+parentList[index].snippet.description+'</div>').css(gallery.settings.photoCommentsCSS);
 			this.$tubeViewMainDiv.append(this.$tubeViewMainDivComment);
 			
