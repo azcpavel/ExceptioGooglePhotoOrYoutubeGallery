@@ -79,8 +79,10 @@
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
 			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');
-			ex.viewport.append(ex.more);
+			ex.hoverCSS = $('<div style="width:100%;float:left"></div>')
+			ex.viewport.append(ex.more,ex.hoverCSS);
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});
+			ex.hoverCSS.html('<style>.divHover:before{content: " ";display: inline-block;vertical-align: middle;height: 100%;}</style>');
 			ex.css({'float':'left','width':'99%','padding': '0.5%'});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
@@ -167,7 +169,9 @@
 					'-webkit-transition':'all 0.5s',
 					'width': '150%',
 					'min-height': '210px',
-					'margin-left' : '-25%'
+					'margin-left' : '-25%',
+					'display':'inline-block',
+					'vertical-align': 'middle'
 				});
 				this.$galleryAlbum.html(this.$galleryAlbumImage);
 				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
@@ -185,7 +189,7 @@
 					'position':'absolute',
 					'top' : '80%',
 					'padding-top' : '2%',
-					'z-index' : '39237846'					
+					'z-index' : '39237'					
 					});
 				this.$galleryAlbumPopDiv = $('<div style="width:100%;text-align:center;">'+parentListChield.snippet.title+'</div>');
 				if(gallery.settings.albumTitleCSS != '')
@@ -195,9 +199,12 @@
 				this.$galleryAlbum.append(this.$galleryAlbumPop);																				
 				this.$galleryAlbum.hover(function(){
 					$(this).find('img').css({
-						'width': '160%',						
-						'margin-left' : '-30%'						
+						'width': '100%',
+						'height': 'auto',
+						'min-height': '0',						
+						'margin-left' : '0%'
 					});
+					$(this).addClass('divHover');
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');					
 					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
@@ -207,6 +214,7 @@
 						'min-height': '210px',
 						'margin-left' : '-25%'
 					});
+					$(this).removeClass('divHover');
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
@@ -216,7 +224,7 @@
 				});	
 				
 				this.$galleryAlbum.click(function(){
-					// console.log('Test');
+					ex.more.fadeOut('slow');
 					showTube(parentList, $(this).index());
 					gallery.settings.onGalleryEnter();
 				});
@@ -245,6 +253,7 @@
 			});
 			this.$tubeViewClose = $('<div>'+gallery.settings.photoPreviewCloseText+'</div>').attr('title','Click to close.').css({'position':'absolute','margin-top':'5%','font-size':'20px','width':'80%','text-align':'right','cursor':'pointer'}).click(function(){
 				$(this).parent().fadeOut('slow').remove();
+				ex.more.fadeIn('slow');
 			});
 			this.$tubeView.html(this.$tubeViewClose);
 			ex.append(this.$tubeView);			
@@ -301,7 +310,9 @@
 					'-webkit-transition':'all 0.5s',
 					'width': '150%',
 					'min-height': '210px',
-					'margin-left' : '-25%'
+					'margin-left' : '-25%',
+					'display':'inline-block',
+					'vertical-align': 'middle'
 				});
 				this.$galleryAlbum.html(this.$galleryAlbumImage);
 				this.$galleryAlbumPop = $('<div class="galleryAlbumPop"></div>')
@@ -319,7 +330,7 @@
 					'position':'absolute',
 					'top' : '80%',
 					'padding-top' : '2%',
-					'z-index' : '39237846'					
+					'z-index' : '39237'					
 					});
 				this.$galleryAlbumPopDiv = $('<div style="width:100%;text-align:center;">'+parentList[parentLoop].title.$t+'</div>');
 				if(gallery.settings.albumTitleCSS != '')
@@ -329,9 +340,12 @@
 				this.$galleryAlbum.append(this.$galleryAlbumPop);																				
 				this.$galleryAlbum.hover(function(){
 					$(this).find('img').css({
-						'width': '160%',						
-						'margin-left' : '-30%'						
+						'width': '100%',
+						'height': 'auto',
+						'min-height': '0',						
+						'margin-left' : '0%'											
 					});
+					$(this).addClass('divHover');					
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');					
 					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
@@ -341,6 +355,7 @@
 						'min-height': '210px',
 						'margin-left' : '-25%'
 					});
+					$(this).removeClass('divHover');
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
@@ -350,6 +365,7 @@
 				});	
 				
 				this.$galleryAlbum.click(function(){
+					ex.more.fadeOut('slow');
 					this.$photoGallery = $('<div></div>')
 					.css({
 					'overflow-y':'auto',
@@ -370,19 +386,20 @@
 					this.$photoGalleryClose = $('<div>'+gallery.settings.photoAlbumCloseText+'</div>').attr('title','Back to gallery.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
 						$(this).parent().fadeOut('slow').remove();
 						ex.fadeIn('slow');
+						ex.more.fadeIn('slow');
 					});
 					this.$photoGallery.html(this.$photoGalleryClose);
 					ex.viewport.append(this.$photoGallery);
 					ex.hide();
 					this.$photoGallery.fadeIn('slow').append('<div id="exceptioPhotoView"></div>');
 					$.each(parentListChield.entry,function(index, pic){						
-						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="margin:0.5%;cursor:pointer;width:'+(chieldWidth-1)+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.content.src+'" style="height:260px;margin:0 auto;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
+						$('#exceptioPhotoView').append('<div data-index="'+index+'" style="margin:0.5%;cursor:pointer;width:'+(chieldWidth-1)+'%;float:left;height:213px;overflow:hidden;"><img src="'+pic.content.src+'" style="width:150%;min-height:210px;margin-left:-25%;transition:all 0.5s;-o-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-transition:all 0.5s;"></div>');
 					});
 
 					$('#exceptioPhotoView > div').hover(function(){						
-						$(this).find('img').css({'height':'270px'});
-					},function(){
-						$(this).find('img').css({'height':'260px'});
+						$(this).find('img').css({'margin-left':'0%','min-height':'0','height':'auto','width':'100%'});
+					},function(){						
+						$(this).find('img').css({'margin-left':'-25%','min-height':'210px','width':'150%'});
 					});
 
 					$(('#exceptioPhotoView > div')).click(function(){
@@ -451,6 +468,7 @@
 		//Initializes namespace settings for Destroy Gallery
 		ex.desrtoyGallery = function (){				
 			ex.more.remove();
+			ex.hoverCSS.remove();
 			$(this).unwrap().unwrap();			
 			$(this).children().css({'list-style':'initial','float':'none'})			
 		};
