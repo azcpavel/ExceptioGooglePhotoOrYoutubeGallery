@@ -38,7 +38,7 @@ Simple jQuery Google Plus Image Gallery
 			}
 			*/
 
-			$('.test').exceptioPhotoGallery({
+			$('.test').exceptioGoogleGallery({
 				'galleryUserId' : 'azc.pavel@gmail.com' // Your Google ID
 			});
 			
