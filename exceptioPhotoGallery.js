@@ -127,7 +127,8 @@
 				else
 					this.$loadMore = $('<span class="exLoadMoreAlbum">'+gallery.settings.loadLessText+'</span>').css(gallery.settings.loadMoreCSS).click(function(){					
 						gallery.settings.hideMoreThen = gallery.settings.hideMoreThenBack;					
-						ex.reloadGallery(gallery.settings);					
+						ex.reloadGallery(gallery.settings);
+						$('html,body').animate({scrollTop:ex.offset().top},500);					
 					});
 
 				ex.more.html(this.$loadMore);				
