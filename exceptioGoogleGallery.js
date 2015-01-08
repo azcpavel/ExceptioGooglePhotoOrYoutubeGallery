@@ -33,19 +33,19 @@
 		onGalleryPhoto : function(){} //exec after Photo Show		
 	}
 
-	$.fn.exceptioPhotoGallery = function(options){	
+	$.fn.exceptioGoogleGallery = function(options){	
 
 		if(this.length == 0) return this;
 
 		// to support mutltiple elements
 		if(this.length > 1){
-			this.each(function(){$(this).exceptioPhotoGallery(options)});			
+			this.each(function(){$(this).exceptioGoogleGallery(options)});			
 			return this;
 		}		
 
 		// create a namespace to be use in functions
 		var gallery = {};
-		// set a reference to our exceptioPhotoGallery element
+		// set a reference to our exceptioGoogleGallery element
 		var ex = this;
 		// create a namespace for slideFX
 		var slideFX = {};		
