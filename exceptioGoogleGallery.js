@@ -3,7 +3,7 @@
  * A Product of Exceotion Solutions
  * http://exceptionsolutions.com
  * 2014, Ahsan Zahid Chowdhury - http://itszahid.info
- * 
+ * https://github.com/azcpavel/ExceptioGooglePlusImageGallery
 */
 
 ;(function($){
