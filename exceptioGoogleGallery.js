@@ -3,7 +3,7 @@
  * A Product of Exceotion Solutions
  * http://exceptionsolutions.com
  * 2014, Ahsan Zahid Chowdhury - http://itszahid.info
- * https://github.com/azcpavel/ExceptioGooglePlusImageGallery
+ * 
 */
 
 ;(function($){
@@ -78,11 +78,9 @@
 			$('#exLoadMoreAlbum').remove();
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
-			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');
-			ex.hoverCSS = $('<div style="width:100%;float:left"></div>')
+			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');			
 			ex.viewport.append(ex.more,ex.hoverCSS);
-			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});
-			ex.hoverCSS.html('<style>.divHover:before{content: " ";display: inline-block;vertical-align: middle;height: 100%;}</style>');
+			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});			
 			ex.css({'float':'left','width':'99%','padding': '0.5%'});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
@@ -198,13 +196,15 @@
 				this.$galleryAlbumPop.html(this.$galleryAlbumPopDiv).append('<hr>');
 				this.$galleryAlbum.append(this.$galleryAlbumPop);																				
 				this.$galleryAlbum.hover(function(){
+
 					$(this).find('img').css({
 						'width': '100%',
 						'height': 'auto',
 						'min-height': '0',						
-						'margin-left' : '0%'
+						'margin-left' : '0%',
+						'margin-top' : Math.ceil(($(this).find('img').parent().height()-($(this).find('img').height()*100/150)) / 2)
 					});
-					$(this).addClass('divHover');
+					
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');					
 					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
@@ -212,9 +212,10 @@
 					$(this).find('img').css({
 						'width': '150%',
 						'min-height': '210px',
-						'margin-left' : '-25%'
+						'margin-left' : '-25%',
+						'margin-top' : '0px'
 					});
-					$(this).removeClass('divHover');
+					//$(this).removeClass('divHover');
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
@@ -343,9 +344,9 @@
 						'width': '100%',
 						'height': 'auto',
 						'min-height': '0',						
-						'margin-left' : '0%'											
-					});
-					$(this).addClass('divHover');					
+						'margin-left' : '0%',
+						'margin-top' : Math.ceil(($(this).find('img').parent().height()-($(this).find('img').height()*100/150)) / 2)
+					});					
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');					
 					$(this).find('[class="galleryAlbumPop"]').css({'padding-top':'35%','top':'-0.5%'});
@@ -353,9 +354,9 @@
 					$(this).find('img').css({
 						'width': '150%',
 						'min-height': '210px',
-						'margin-left' : '-25%'
-					});
-					$(this).removeClass('divHover');
+						'margin-left' : '-25%',
+						'margin-top' : '0px'
+					});					
 					$(".galleryAlbumPop").css('padding-top','2%');
 					$(".galleryAlbumPop").css('top','80%');
 				});
@@ -397,9 +398,20 @@
 					});
 
 					$('#exceptioPhotoView > div').hover(function(){						
-						$(this).find('img').css({'margin-left':'0%','min-height':'0','height':'auto','width':'100%'});
+						$(this).find('img').css({
+							'margin-left':'0%',
+							'min-height':'0',
+							'height':'auto',
+							'width':'100%',
+							'margin-top': Math.ceil(($(this).find('img').parent().height()-($(this).find('img').height()*100/150)) / 2)
+						});
 					},function(){						
-						$(this).find('img').css({'margin-left':'-25%','min-height':'210px','width':'150%'});
+						$(this).find('img').css({
+							'margin-left':'-25%',
+							'min-height':'210px',
+							'width':'150%',
+							'margin-top' : '0px'
+						});
 					});
 
 					$(('#exceptioPhotoView > div')).click(function(){
@@ -467,8 +479,7 @@
 
 		//Initializes namespace settings for Destroy Gallery
 		ex.desrtoyGallery = function (){				
-			ex.more.remove();
-			ex.hoverCSS.remove();
+			ex.more.remove();			
 			$(this).unwrap().unwrap();			
 			$(this).children().css({'list-style':'initial','float':'none'})			
 		};
