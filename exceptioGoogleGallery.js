@@ -96,7 +96,7 @@
 			ex.breadcrumb.html(ex.root);
 			ex.viewport.append(ex.more);
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});			
-			ex.css({'float':'left','width':'100%','padding':'0.5%'});
+			ex.css({'float':'left','width':'99%','padding':'0.5%'});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
@@ -389,7 +389,7 @@
 					'overflow-y':'auto',
 					'overflow-x':'hidden',
 					'height':'auto',
-					'width':'100%',
+					'width':'99%',
 					'color':'#FFF',
 					'background':gallery.settings.backgroundGallery,										
 					'text-align': 'center',
@@ -398,7 +398,7 @@
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
 					'position':'relative',
-					'padding': '0.5% 0.5% 40px 0.5%',										
+					'padding': '0.5%',										
 					});					
 					ex.viewport.append(this.$photoGallery);
 					ex.hide();
