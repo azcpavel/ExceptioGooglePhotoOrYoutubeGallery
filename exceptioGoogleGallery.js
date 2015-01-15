@@ -19,8 +19,9 @@
 		photoViewMainDivPrevText : 'Prev', //prev selector text
 		photoViewMainDivPrevClass : '', //next selector class
 		albumRootText: 'Exceptio Google Gallery', //root gallery text
-		albumBreadcrumbCSS: {},
-		albumBreadcrumbSpanCSS: {'color':'#000','cursor':'pointer'},
+		albumBreadcrumbCSS: {}, //album breadcrumb css
+		albumBreadcrumbArrow: '<span> &lt;= </span>', //album breadcrumb arrow
+		albumBreadcrumbSpanCSS: {'color':'#000','cursor':'pointer'}, //album breadcrumb span css
 		albumTitleCSS: '', //album title css		
 		backgroundAlbum: 'rgb(0,0,0)', //album background color
 		backgroundAlbumHover: 'rgba(0,0,0,0.9)', //album hover background color
@@ -381,7 +382,7 @@
 				
 				this.$galleryAlbum.click(function(){
 					ex.more.hide();
-					this.$albumChield = $('<span> =&gt; '+parentList[parentLoop].title.$t+'</span>').css(gallery.settings.albumBreadcrumbSpanCSS);
+					this.$albumChield = $(gallery.settings.albumBreadcrumbArrow+' <span>'+parentList[parentLoop].title.$t+'</span>').css(gallery.settings.albumBreadcrumbSpanCSS);
 					ex.breadcrumb.append(this.$albumChield);
 					this.$photoGallery = $('<div class="photoGallery"></div>')
 					.css({

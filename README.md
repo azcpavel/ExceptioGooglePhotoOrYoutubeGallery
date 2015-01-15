@@ -24,13 +24,14 @@ Simple jQuery Google Plus Image Gallery
 				photoViewMainDivPrevText : 'Prev', //prev selector text
 				photoViewMainDivPrevClass : '', //next selector class
 				albumRootText: 'Exceptio Google Gallery', //root gallery text
-				albumBreadcrumbCSS: {},
-				albumBreadcrumbSpanCSS: {'color':'#000','cursor':'pointer'},
+				albumBreadcrumbCSS: {}, //album breadcrumb css
+				albumBreadcrumbArrow: '<span> &lt;= </span>', //album breadcrumb arrow
+				albumBreadcrumbSpanCSS: {'color':'#000','cursor':'pointer'}, //album breadcrumb span css
 				albumTitleCSS: '', //album title css		
 				backgroundAlbum: 'rgb(0,0,0)', //album background color
 				backgroundAlbumHover: 'rgba(0,0,0,0.9)', //album hover background color
-				backgroundGalery: 'rgb(0,0,0)', //gallery background color
-				backgroundPopup: 'rgba(0,0,0,0.6)', //item popup background color				
+				backgroundGallery: 'rgb(0,0,0)', //gallery background color
+				backgroundPopup: 'rgba(0,0,0,0.6)', //item popup background color		
 				photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;', //photo preview close text
 				hideMoreThen : 0, //you can define number of album load in first place				
 				loadingImage : 'loader.gif', //you can define imagepath with name
@@ -38,7 +39,7 @@ Simple jQuery Google Plus Image Gallery
 				loadLessText : 'Load Less..', //text for load more options
 				loadMoreCSS : {'cursor':'pointer'}, //css for load more options
 				onGalleryEnter : function(){}, //exec before Gallery Show
-				onGalleryPhoto : function(){} //exec after Photo Show		
+				onGalleryPhoto : function(){} //exec after Photo Show
 			}
 			*/
 
