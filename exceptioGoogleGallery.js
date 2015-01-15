@@ -8,23 +8,27 @@
 
 ;(function($){
 	var defaultOptions = {
-		type : 'picasa',	//youtube or picasa	
+		type : 'picasa', //youtube or picasa	
 		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
 		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube channel id
 		galleryUserApiKey : '', //google console api key
 		photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
-		photoViewMainDivNextText : 'Next',
-		photoViewMainDivNextClass : '',
-		photoViewMainDivPrevText : 'Prev',
-		photoViewMainDivPrevClass : '',
-		albumTitleCSS: '',
-		backgroundRgba: 'rgba(0,0,0,0.9)',
-		backgroundRgb: 'rgb(0,0,0)',
-		photoAlbumCloseText : 'Back&nbsp;&nbsp;&nbsp;',
-		photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;',
+		photoViewMainDivNextText : 'Next', //next selector text
+		photoViewMainDivNextClass : '', //next selector class
+		photoViewMainDivPrevText : 'Prev', //prev selector text
+		photoViewMainDivPrevClass : '', //next selector class
+		albumRootText: 'Exceptio Google Gallery', //root gallery text
+		albumBreadcrumbCSS: {},
+		albumBreadcrumbSpanCSS: {'color':'#000','cursor':'pointer'},
+		albumTitleCSS: '', //album title css		
+		backgroundAlbum: 'rgb(0,0,0)', //album background color
+		backgroundAlbumHover: 'rgba(0,0,0,0.9)', //album hover background color
+		backgroundGallery: 'rgb(0,0,0)', //gallery background color
+		backgroundPopup: 'rgba(0,0,0,0.6)', //item popup background color		
+		photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;', //photo preview close text
 		hideMoreThen : 0, //you can define number of album load in first place
-		hideMoreThenBack : 0,
+		hideMoreThenBack : 0, //backup navigation defaults value
 		loadingImage : 'loader.gif', //you can define imagepath with name
 		loadMoreText : 'Load More..', //text for load more options
 		loadLessText : 'Load Less..', //text for load more options
@@ -78,10 +82,20 @@
 			$('#exLoadMoreAlbum').remove();
 			ex.wrap('<div class="exGallery" data-exGalleryIndex="'+$( "div" ).index(ex)+'"><div class="ex-viewport"></div></div>');
 			ex.viewport = ex.parent().css({'float':'left','width':'100%'});
-			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');			
-			ex.viewport.append(ex.more,ex.hoverCSS);
+			ex.more = $('<div class="exMore" style="width:100%;float:left"></div>');
+			ex.breadcrumb = $('<div style="width:100%;float:left"></div>').css(gallery.settings.albumBreadcrumbCSS);
+			ex.root = $('<span style="cursor:pointer" title="Back to Album Root">'+gallery.settings.albumRootText+'</span>').css(gallery.settings.albumBreadcrumbSpanCSS).click(function(){
+				$(this).parent().find('span:gt(0)').remove();
+				$(this).html(gallery.settings.albumRootText);				
+				ex.viewport.find('div[class="photoGallery"]').fadeOut('slow').remove();
+				ex.fadeIn('slow');
+				ex.more.fadeIn('slow');
+			});			
+			ex.viewport.prepend(ex.breadcrumb);
+			ex.breadcrumb.html(ex.root);
+			ex.viewport.append(ex.more);
 			ex.wrapper = ex.viewport.parent().css({'float':'left','width':'100%'});			
-			ex.css({'float':'left','width':'99%','padding': '0.5%'});
+			ex.css({'float':'left','width':'100%','padding':'0.5%'});
 			if(gallery.settings.wrapClass != null)
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
@@ -155,7 +169,7 @@
 					'height':'210',
 					'float':'left',
 					'cursor':'pointer',
-					'background' : gallery.settings.backgroundRgb,					
+					'background' : gallery.settings.backgroundAlbum,					
 					'margin' : '0.5%',
 					'width':(chieldWidth - 1)+'%',
 					'overflow':'hidden',					
@@ -178,7 +192,7 @@
 					'height':'250px',
 					'width':'100%',
 					'color':'#FFF',
-					'background':gallery.settings.backgroundRgba,					
+					'background':gallery.settings.backgroundAlbumHover,					
 					'text-align': 'center',
 					'transition':'all 0.5s',
 					'-o-transition':'all 0.5s',
@@ -241,7 +255,7 @@
 			'height':$(window).height(),
 			'width':$(window).width(),
 			'color':'#FFF',
-			'background':gallery.settings.backgroundRgba,
+			'background':gallery.settings.backgroundPopup,
 			'text-align': 'center',
 			'transition':'all 0.5s',
 			'-o-transition':'all 0.5s',
@@ -299,7 +313,7 @@
 					'height':'210',
 					'float':'left',
 					'cursor':'pointer',
-					'background' : gallery.settings.backgroundRgb,					
+					'background' : gallery.settings.backgroundAlbum,					
 					'margin' : '0.5%',
 					'width':(chieldWidth - 1)+'%',
 					'overflow':'hidden',					
@@ -322,7 +336,7 @@
 					'height':'250px',
 					'width':'100%',
 					'color':'#FFF',
-					'background':gallery.settings.backgroundRgba,					
+					'background':gallery.settings.backgroundAlbumHover,					
 					'text-align': 'center',
 					'transition':'all 0.5s',
 					'-o-transition':'all 0.5s',
@@ -366,30 +380,25 @@
 				});	
 				
 				this.$galleryAlbum.click(function(){
-					ex.more.fadeOut('slow');
-					this.$photoGallery = $('<div></div>')
+					ex.more.hide();
+					this.$albumChield = $('<span> =&gt; '+parentList[parentLoop].title.$t+'</span>').css(gallery.settings.albumBreadcrumbSpanCSS);
+					ex.breadcrumb.append(this.$albumChield);
+					this.$photoGallery = $('<div class="photoGallery"></div>')
 					.css({
 					'overflow-y':'auto',
 					'overflow-x':'hidden',
 					'height':'auto',
-					'width':'99%',
+					'width':'100%',
 					'color':'#FFF',
-					'background':gallery.settings.backgroundRgb,
-					'padding': '0.5%',					
+					'background':gallery.settings.backgroundGallery,										
 					'text-align': 'center',
 					'transition':'all 0.5s',
 					'-o-transition':'all 0.5s',
 					'-moz-transition':'all 0.5s',
 					'-webkit-transition':'all 0.5s',
 					'position':'relative',
-					'padding-bottom': '40px',										
-					});
-					this.$photoGalleryClose = $('<div>'+gallery.settings.photoAlbumCloseText+'</div>').attr('title','Back to gallery.').css({'margin':'20px 0','font-size':'20px','width':'100%','text-align':'right','cursor':'pointer'}).click(function(){
-						$(this).parent().fadeOut('slow').remove();
-						ex.fadeIn('slow');
-						ex.more.fadeIn('slow');
-					});
-					this.$photoGallery.html(this.$photoGalleryClose);
+					'padding': '0.5% 0.5% 40px 0.5%',										
+					});					
 					ex.viewport.append(this.$photoGallery);
 					ex.hide();
 					this.$photoGallery.fadeIn('slow').append('<div id="exceptioPhotoView"></div>');
@@ -431,7 +440,7 @@
 			'height':$(window).height(),
 			'width':$(window).width(),
 			'color':'#FFF',
-			'background':gallery.settings.backgroundRgba,
+			'background':gallery.settings.backgroundPopup,
 			'text-align': 'center',
 			'transition':'all 0.5s',
 			'-o-transition':'all 0.5s',
@@ -479,7 +488,8 @@
 
 		//Initializes namespace settings for Destroy Gallery
 		ex.desrtoyGallery = function (){				
-			ex.more.remove();			
+			ex.more.remove();
+			ex.breadcrumb.remove();			
 			$(this).unwrap().unwrap();			
 			$(this).children().css({'list-style':'initial','float':'none'})			
 		};
