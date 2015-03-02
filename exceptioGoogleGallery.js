@@ -241,7 +241,7 @@
 				
 				this.$galleryAlbum.click(function(){
 					ex.more.fadeOut('slow');
-					showTube(parentList, $(this).index());
+					showTube(parentList, parentLoop);
 					gallery.settings.onGalleryEnter();
 				});
 				ex.append(this.$galleryAlbum);	
