@@ -162,7 +162,7 @@
 		//Initializes namespace tube album
 		var printAlbumYoutube = function(parentList,parentLoop){
 			
-			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].id.videoId+'&key=AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko&part=snippet,statistics,status',
+			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].id.videoId+'&key='+gallery.settings.galleryUserApiKey+'&part=snippet,statistics,status',
 				function(data){								
 				var parentListChield  = data.items[0];							
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
