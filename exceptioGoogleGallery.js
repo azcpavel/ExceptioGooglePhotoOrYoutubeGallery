@@ -113,7 +113,7 @@
 					ex.empty();
 					
 					if(gallery.settings.hideMoreThen != 0)
-						var last = gallery.settings.hideMoreThen;
+						var last = (parentList.length >= gallery.settings.hideMoreThen ) ? gallery.settings.hideMoreThen : parentList.length;
 					else
 						var last = parentList.length;
 					//console.log(parentList);	
@@ -129,7 +129,7 @@
 					ex.empty();				
 					
 					if(gallery.settings.hideMoreThen != 0)
-						var last = gallery.settings.hideMoreThen;
+						var last = (parentList.length >= gallery.settings.hideMoreThen ) ? gallery.settings.hideMoreThen : parentList.length;
 					else
 						var last = parentList.length;
 
