@@ -249,7 +249,8 @@
 		};
 
 		//Initializes namespace tube
-		var showTube = function(parentList, index){					
+		var showTube = function(parentList, index){
+			console.log(parentList,index)					
 			this.$tubeView = $('<div id="photoPreview"></div>')
 			.css({
 			'overflow-y':'auto',
@@ -275,7 +276,13 @@
 			ex.append(this.$tubeView);			
 			this.$tubeViewMainDiv= $('<div style="width:100%;margin-top:5%;"></div>');
 			this.$tubeView.append(this.$tubeViewMainDiv);
-			this.$tubeViewMainDiv.html('<iframe src="http://www.youtube.com/embed/'+parentList[index].id.videoId+'?list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" frameborder="0" style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;"></iframe>');
+			this.$tubeViewMainDiv.html(
+					'<object style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;">'+
+						'<param name="movie" value="https://www.youtube.com/v/'+parentList[index].id.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'"></param>'+
+						'<param name="allowScriptAccess" value="always"></param>'+
+						'<embed src="https://www.youtube.com/v/'+parentList[index].id.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" type="application/x-shockwave-flash" allowscriptaccess="always" width="640" height="390"></embed>'+
+					'</object>'				
+				);
 			this.$tubeViewMainDivComment = $('<div>'+parentList[index].snippet.description+'</div>').css(gallery.settings.photoCommentsCSS);
 			this.$tubeViewMainDiv.append(this.$tubeViewMainDivComment);
 			
