@@ -11,7 +11,8 @@
 		type : 'picasa', //youtube or picasa	
 		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
-		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube channel id
+		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube playlist id
+		emptyMessage : 'No Content Found', //Show message if no content found
 		galleryUserApiKey : '', //google console api key
 		photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
 		photoViewMainDivNextText : 'Next', //next selector text
@@ -101,18 +102,23 @@
 				ex.wrapper.addClass(gallery.settings.wrapClass);			
 
 			if(gallery.settings.type == 'youtube')
-			$.getJSON('https://www.googleapis.com/youtube/v3/search?channelId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
-				function (data){					
-					$.getJSON('https://www.googleapis.com/youtube/v3/channels?id='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&part=contentDetails,snippet,statistics',
+			$.getJSON('https://www.googleapis.com/youtube/v3/playlistItems?playlistId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
+				function (data){
+					if(data.items.length < 1)
+					{
+						ex.viewport.html(gallery.settings.emptyMessage);
+						return;
+					}				
+					$.getJSON('https://www.googleapis.com/youtube/v3/channels?id='+data.items[0].snippet.channelId+'&key='+gallery.settings.galleryUserApiKey+'&part=contentDetails,snippet,statistics',
 						function (argument) {							
 							channelDetails = argument.items[0];							
 						}
-					);
+					);					
 					
 					var parentList  = data.items;					
 					var loopNextPage = function (dataList){						
 						
-						$.getJSON('https://www.googleapis.com/youtube/v3/search?pageToken='+dataList.nextPageToken+'&channelId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
+						$.getJSON('https://www.googleapis.com/youtube/v3/playlistItems?pageToken='+dataList.nextPageToken+'&playlistId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
 							function (dataListNext){
 								if(dataListNext.nextPageToken){
 									$.each(dataListNext.items, function (index, value){
@@ -161,7 +167,13 @@
 			if(gallery.settings.type == 'picasa')
 			$.getJSON("https://picasaweb.google.com/data/feed/base/user/"+gallery.settings.galleryUserId+"?access=public&alt=json-in-script&callback=?",
 				function(data){
-						var parentList  = data.feed.entry;						
+					if(data.feed.entry.length < 1)
+						{
+							ex.viewport.html(gallery.settings.emptyMessage);
+							return;
+						}
+
+					var parentList  = data.feed.entry;						
 					ex.empty();				
 					
 					if(gallery.settings.hideMoreThen != 0)
@@ -198,7 +210,7 @@
 		//Initializes namespace tube album
 		var printAlbumYoutube = function(parentList,parentLoop){
 			
-			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].id.videoId+'&key='+gallery.settings.galleryUserApiKey+'&part=snippet,statistics,status',
+			$.getJSON('https://www.googleapis.com/youtube/v3/videos?id='+parentList[parentLoop].snippet.resourceId.videoId+'&key='+gallery.settings.galleryUserApiKey+'&part=snippet,statistics,status',
 				function(data){								
 				var parentListChield  = data.items[0];							
 				this.$galleryAlbum = $('<div class="galleryAlbum"></div>').css({
@@ -314,9 +326,9 @@
 			this.$tubeView.append(this.$tubeViewMainDiv);
 			this.$tubeViewMainDiv.html(
 					'<object style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;">'+
-						'<param name="movie" value="https://www.youtube.com/v/'+parentList[index].id.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'"></param>'+
+						'<param name="movie" value="https://www.youtube.com/v/'+parentList[index].snippet.resourceId.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'"></param>'+
 						'<param name="allowScriptAccess" value="always"></param>'+
-						'<embed src="https://www.youtube.com/v/'+parentList[index].id.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" type="application/x-shockwave-flash" allowscriptaccess="always" width="640" height="390"></embed>'+
+						'<embed src="https://www.youtube.com/v/'+parentList[index].snippet.resourceId.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" type="application/x-shockwave-flash" allowscriptaccess="always" width="640" height="390"></embed>'+
 					'</object>'				
 				);
 			this.$tubeViewMainDivComment = $('<div>'+parentList[index].snippet.description+'</div>').css(gallery.settings.photoCommentsCSS);

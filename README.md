@@ -16,7 +16,8 @@ Simple jQuery Google Plus Image Gallery
 				type : 'picasa', //youtube or picasa	
 				galleryWidth : '100%', //element width
 				wrapClass : null, //if you wish to add additional class in wrapper		
-				galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube channel id
+				galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube playlist id
+				emptyMessage : 'No Content Found', //Show message if no content found
 				galleryUserApiKey : '', //google console api key
 				photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
 				photoViewMainDivNextText : 'Next', //next selector text
@@ -33,7 +34,8 @@ Simple jQuery Google Plus Image Gallery
 				backgroundGallery: 'rgb(0,0,0)', //gallery background color
 				backgroundPopup: 'rgba(0,0,0,0.6)', //item popup background color		
 				photoPreviewCloseText : 'Close&nbsp;&nbsp;&nbsp;', //photo preview close text
-				hideMoreThen : 0, //you can define number of album load in first place				
+				hideMoreThen : 0, //you can define number of album load in first place
+				hideMoreThenBack : 0, //backup navigation defaults value
 				loadingImage : 'loader.gif', //you can define imagepath with name
 				loadMoreText : 'Load More..', //text for load more options
 				loadLessText : 'Load Less..', //text for load more options
