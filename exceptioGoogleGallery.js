@@ -109,17 +109,53 @@
 						}
 					);
 					
-					var parentList  = data.items;						
-					ex.empty();
+					var parentList  = data.items;					
+					var loopNextPage = function (dataList){						
+						
+						$.getJSON('https://www.googleapis.com/youtube/v3/search?pageToken='+dataList.nextPageToken+'&channelId='+gallery.settings.galleryUserId+'&key='+gallery.settings.galleryUserApiKey+'&maxResults=50&type=video&part=id,snippet',
+							function (dataListNext){
+								if(dataListNext.nextPageToken){
+									$.each(dataListNext.items, function (index, value){
+										parentList.push(value);										
+									});
+									loopNextPage(dataListNext);									
+								}
+								else{
+									$.each(dataListNext.items, function (index, value){
+										parentList.push(value);										
+									});
+
+									ex.empty();
 					
-					if(gallery.settings.hideMoreThen != 0)
-						var last = (parentList.length >= gallery.settings.hideMoreThen ) ? gallery.settings.hideMoreThen : parentList.length;
-					else
-						var last = parentList.length;
-					//console.log(parentList);	
-					for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
-						printAlbumYoutube(parentList,parentLoop);					
+									if(gallery.settings.hideMoreThen != 0)
+										var last = (parentList.length >= gallery.settings.hideMoreThen ) ? gallery.settings.hideMoreThen : parentList.length;
+									else
+										var last = parentList.length;
+									
+									for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
+										printAlbumYoutube(parentList,parentLoop);					
+									};
+								}
+							}
+						);
+						
 					};
+
+					if(data.nextPageToken)
+						loopNextPage(data);
+					else{					
+
+						ex.empty();
+						
+						if(gallery.settings.hideMoreThen != 0)
+							var last = (parentList.length >= gallery.settings.hideMoreThen ) ? gallery.settings.hideMoreThen : parentList.length;
+						else
+							var last = parentList.length;
+						
+						for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
+							printAlbumYoutube(parentList,parentLoop);					
+						};
+					}
 				});
 
 			if(gallery.settings.type == 'picasa')
@@ -250,7 +286,7 @@
 
 		//Initializes namespace tube
 		var showTube = function(parentList, index){
-			console.log(parentList,index)					
+			
 			this.$tubeView = $('<div id="photoPreview"></div>')
 			.css({
 			'overflow-y':'auto',
