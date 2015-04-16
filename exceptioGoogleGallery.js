@@ -325,10 +325,10 @@
 			this.$tubeViewMainDiv= $('<div style="width:100%;margin-top:5%;"></div>');
 			this.$tubeView.append(this.$tubeViewMainDiv);
 			this.$tubeViewMainDiv.html(
-					'<object style="width:60%;height:'+windowHeight/1.2+'px;margin:0 auto;">'+
+					'<object style="width:60%;height:'+windowHeight/1.4+'px;margin:0 auto;">'+
 						'<param name="movie" value="https://www.youtube.com/v/'+parentList[index].snippet.resourceId.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'"></param>'+
 						'<param name="allowScriptAccess" value="always"></param>'+
-						'<embed src="https://www.youtube.com/v/'+parentList[index].snippet.resourceId.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" type="application/x-shockwave-flash" allowscriptaccess="always" width="640" height="390"></embed>'+
+						'<embed src="https://www.youtube.com/v/'+parentList[index].snippet.resourceId.videoId+'?version=3&autoplay=0&list='+channelDetails.contentDetails.relatedPlaylists.uploads+'" type="application/x-shockwave-flash" allowscriptaccess="always" style="width:60%;height:'+windowHeight/1.4+'px;"></embed>'+
 					'</object>'				
 				);
 			this.$tubeViewMainDivComment = $('<div>'+parentList[index].snippet.description+'</div>').css(gallery.settings.photoCommentsCSS);
