@@ -316,13 +316,13 @@
 			'left': '0',
 			'z-index': '39237846'						
 			});
-			this.$tubeViewClose = $('<div>'+gallery.settings.photoPreviewCloseText+'</div>').attr('title','Click to close.').css({'position':'absolute','margin-top':'5%','font-size':'20px','width':'80%','text-align':'right','cursor':'pointer'}).click(function(){
+			this.$tubeViewClose = $('<div>'+gallery.settings.photoPreviewCloseText+'</div>').attr('title','Click to close.').css({'position':'relative','margin':'5% auto 0 auto','font-size':'20px','width':'80%','text-align':'right','cursor':'pointer'}).click(function(){
 				$(this).parent().fadeOut('slow').remove();
 				ex.more.fadeIn('slow');
 			});
 			this.$tubeView.html(this.$tubeViewClose);
 			ex.append(this.$tubeView);			
-			this.$tubeViewMainDiv= $('<div style="width:100%;margin-top:5%;"></div>');
+			this.$tubeViewMainDiv= $('<div style="width:100%;"></div>');
 			this.$tubeView.append(this.$tubeViewMainDiv);
 			var tubeHeight;
 			if(windowHeight > windowWidth){
