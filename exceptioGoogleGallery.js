@@ -61,13 +61,32 @@
 
 		var channelDetails;
 
-		var chieldWidth;
+		var chieldWidth;		
+
+		/**
+		*	@contributor Fannii https://github.com/Fannii
+		*	@abstract To prevent duplicating album 
+		*/
+
+		var reSizeTime;
 
 		$(window).resize(function(){
+			ex.fadeIn();
+			$('.photoGallery').remove();
+			clearTimeout(reSizeTime);
+						
 			windowWidth = $(window).width();
 			windowHeight = $(window).height();
-			ex.reloadGallery(options);			
+
+			reSizeTime = setTimeout(doneResizing, 500);						
 		});
+
+		function doneResizing(){			
+			ex.reloadGallery(options);
+		}
+
+		/****************************************/
+
 		
 		//Initializes namespace settings		
 		var initGallery = function(options){	
@@ -552,7 +571,7 @@
 		ex.desrtoyGallery = function (){				
 			ex.more.remove();
 			ex.breadcrumb.remove();			
-			$(this).unwrap().unwrap();			
+			$(this).unwrap().unwrap().unwrap();			
 			$(this).children().css({'list-style':'initial','float':'none'})			
 		};
 

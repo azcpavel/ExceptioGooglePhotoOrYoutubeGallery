@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Google youtube Gallery </title>
+		<script type="text/javascript" src="jquery-1.11.0.min.js"></script>		
+		<script type="text/javascript" src="exceptioGoogleGallery.js"></script>		
+		<script type="text/javascript">		
+		$(document).ready(function(){
+			
+			$('.test').exceptioGoogleGallery({
+				type : 'youtube',
+				galleryUserId : 'PLhd1HyMTk3f5yqcPXjLo8qroWJiMMFBSk', // youtube playlist ID
+				galleryUserApiKey : 'AIzaSyCCCXZNyaWG43PFT3_aZNsH7fmDTafGnko',
+				hideMoreThen: 8
+			});
+			
+		});			
+		</script>
+	</head>	
+	<body>
+		<div class="test"></div>
+	</body>
+</html>
