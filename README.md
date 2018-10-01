@@ -13,7 +13,7 @@ Simple jQuery Google Plus Image Gallery
 		$(document).ready(function(){
 			/*
 			var defaultOptions = {
-				type : 'picasa', //youtube or picasa	
+				type : 'photo', //youtube or photo	
 				galleryWidth : '100%', //element width
 				wrapClass : null, //if you wish to add additional class in wrapper		
 				galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube playlist id
