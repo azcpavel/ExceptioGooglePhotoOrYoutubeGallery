@@ -1,4 +1,4 @@
-ExceptioGooglePlusImageGallery
+ExceptioGooglePhotoOrYoutubeGallery
 ==============================
 
 Simple jQuery Google Plus Image Gallery
