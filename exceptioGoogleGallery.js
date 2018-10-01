@@ -159,7 +159,7 @@
 										var last = parentList.length;
 									
 									for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
-										if(gallery.settings.hideAlbums.indexOf(parentList[parentLoop].snippet.title) != -1)
+										if(gallery.settings.hideContent.indexOf(parentList[parentLoop].snippet.title) != -1)
 											continue;
 										printAlbumYoutube(parentList,parentLoop);					
 									};
@@ -181,7 +181,7 @@
 							var last = parentList.length;
 						
 						for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
-							if(gallery.settings.hideAlbums.indexOf(parentList[parentLoop].snippet.title) != -1)
+							if(gallery.settings.hideContent.indexOf(parentList[parentLoop].snippet.title) != -1)
 								continue;
 							printAlbumYoutube(parentList,parentLoop);					
 						};
@@ -206,7 +206,7 @@
 						var last = parentList.length;
 
 					for (var parentLoop = 0; parentLoop < last; parentLoop++) {					
-						if(gallery.settings.hideAlbums.indexOf(parentList[parentLoop].title.$t) != -1)
+						if(gallery.settings.hideContent.indexOf(parentList[parentLoop].title.$t) != -1)
 							continue;
 						printAlbum(parentList,parentLoop);					
 					};
