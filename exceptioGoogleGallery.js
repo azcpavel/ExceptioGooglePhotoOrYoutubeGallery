@@ -8,7 +8,7 @@
 
 ;(function($){
 	var defaultOptions = {
-		type : 'picasa', //youtube or picasa	
+		type : 'photo', //youtube or photo	
 		galleryWidth : '100%', //element width
 		wrapClass : null, //if you wish to add additional class in wrapper		
 		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube playlist id
@@ -183,8 +183,8 @@
 					}
 				});
 
-			if(gallery.settings.type == 'picasa')
-			$.getJSON("https://picasaweb.google.com/data/feed/base/user/"+gallery.settings.galleryUserId+"?access=public&alt=json-in-script&callback=?",
+			if(gallery.settings.type == 'photo')
+			$.getJSON("http://photos.googleapis.com/data/feed/api/user/"+gallery.settings.galleryUserId+"?access=public&alt=json-in-script&callback=?",
 				function(data){
 					if(data.feed.entry.length < 1)
 						{
