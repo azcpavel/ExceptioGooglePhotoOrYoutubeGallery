@@ -13,7 +13,7 @@
 		wrapClass : null, //if you wish to add additional class in wrapper		
 		galleryUserId : 'azc.pavel@gmail.com', //your google id or youtube playlist id
 		emptyMessage : 'No Content Found', //Show message if no content found
-		hideContent : [], // album/youtube title name to hide eg. ["x","y","z"]
+		hideContent : [], // album/youtube title to hide eg. ["x","y","z"]
 		galleryUserApiKey : '', //google console api key
 		photoCommentsCSS : {'margin':'0 auto','width':'60%','text-align':'left'},
 		photoViewMainDivNextText : 'Next', //next selector text
